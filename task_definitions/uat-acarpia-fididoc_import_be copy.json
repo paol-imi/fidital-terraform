@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "uat-fididoc_import_be",
-            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/uat-fididoc_import_be:latest",
+            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc_import_be:latest",
             "cpu": 0,
             "memory": 1024,
             "portMappings": [
