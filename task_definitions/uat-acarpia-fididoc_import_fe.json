@@ -1,0 +1,83 @@
+{
+    "family": "uat-acarpia-fidicoc_import_fe",
+    "containerDefinitions": [
+        {
+            "name": "uat-fididoc_import_fe",
+            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc_import_fe:latest",
+            "cpu": 0,
+            "memory": 256,
+            "portMappings": [
+                {
+                    "name": "fe80",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                },
+                {
+                    "name": "fe8086",
+                    "containerPort": 8086,
+                    "hostPort": 8086,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "FIDI_DOC_IMPORT_FE_HOST_NAME",
+                    "value": ""
+                },
+                {
+                    "name": "FIDI_DOC_IMPORT_FE_ADDRESS",
+                    "value": ""
+                },
+                {
+                    "name": "KEYCLOAK_REALM",
+                    "value": "Acarpia"
+                },
+                {
+                    "name": "KEYCLOAK_HOST_NAME",
+                    "value": "ip-uat.fidital.digital"
+                },
+                {
+                    "name": "KEYCLOAK_ADDRESS",
+                    "value": "https://ip-uat.fidital.digital"
+                },
+                {
+                    "name": "FIDI_DOC_IMPORT_BE_HOST_NAME",
+                    "value": ""
+                },
+                {
+                    "name": "FIDI_DOC_IMPORT_BE_IP",
+                    "value": ""
+                },
+                {
+                    "name": "FIDI_DOC_IMPORT_BE_ADDRESS",
+                    "value": ""
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/terraform/uat/acarpia/fididoc_import_fe",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "eu-south-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::305653446094:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::305653446094:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [],
+    "memory": "256"
+}
