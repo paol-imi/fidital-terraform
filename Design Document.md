@@ -51,42 +51,45 @@ To align with our infrastructure needs and deployment workflows, we use differen
 Each repository has a designated purpose and behavior when integrated into the cloud infrastructure, summarized as follows:
 
 #### Infrastructure Repository (Terraform)
-   - **Branches**: `dev` and `main` represent two separate private infrastructure environments, each with its own VPC.
-   - **Pull Requests**: Any PR to `main` or `dev` generates a Terraform plan, which is displayed in the pull request body for review and approval.
-   - **Environments**:
-      - The infrastructure is based on a standard VPC design.
-      - Microservices are managed via ECS (Elastic Container Service) clusters within these VPCs.
-      - Terraform is the source of truth for ECS services and the VPC setup, ensuring all configurations are centralized despite the distribution of microservices across multiple repositories.
+
+- **Branches**: `dev` and `main` represent two separate private infrastructure environments, each with its own VPC.
+- **Pull Requests**: Any PR to `main` or `dev` generates a Terraform plan, which is displayed in the pull request body for review and approval.
+- **Environments**:
+  - The infrastructure is based on a standard VPC design.
+  - Microservices are managed via ECS (Elastic Container Service) clusters within these VPCs.
+  - Terraform is the source of truth for ECS services and the VPC setup, ensuring all configurations are centralized despite the distribution of microservices across multiple repositories.
 
 #### Microservices Repositories
-   - **Versioning and Docker Image Generation**:
-      - The version in each microservice repository is specified in `pom.xml` (for Maven projects) or `package.json` (for NPM projects).
-      - **Version Conventions**:
-        - On the `main` branch, versions follow the **semantic versioning convention** (`major.minor.patch`, e.g., `1.0.0`), indicating a stable release.
-        - On the `develop` branch, versions use a **snapshot convention** (`major.minor.patch-SNAPSHOT`, e.g., `1.1.0-SNAPSHOT`), representing an in-progress development version.
 
-   - **Stable Releases (Main Branch)**:
-      - For `main`, the pipeline checks for version changes in `pom.xml` or `package.json`.
-      - If a version change is detected, the pipeline:
-         - Automatically tags the commit with the new version (e.g., `v1.0.0`).
-         - Generates an immutable Docker image with the stable version tag, which is pushed to Amazon ECR (Elastic Container Registry).
-         - Publishes the application artifact to AWS CodeArtifact with the same stable version.
+- **Versioning and Docker Image Generation**:
+  - The version in each microservice repository is specified in `pom.xml` (for Maven projects) or `package.json` (for NPM projects).
+  - **Version Conventions**:
+    - On the `main` branch, versions follow the **semantic versioning convention** (`major.minor.patch`, e.g., `1.0.0`), indicating a stable release.
+    - On the `develop` branch, versions use a **snapshot convention** (`major.minor.patch-SNAPSHOT`, e.g., `1.1.0-SNAPSHOT`), representing an in-progress development version.
 
-   - **Development Snapshots (Develop Branch)**:
-      - For `develop`, each commit generates a new Docker image tagged as `develop` or `latest`, but it inherits the **snapshot version** specified in `pom.xml` or `package.json` (e.g., `1.1.0-SNAPSHOT`).
-      - This new image replaces the previous snapshot in ECR, allowing the latest state of the application to be tested.
-      - The `-SNAPSHOT` suffix is mandatory in the version for `develop` to clearly indicate it is a development build and not stable.
+- **Stable Releases (Main Branch)**:
+  - For `main`, the pipeline checks for version changes in `pom.xml` or `package.json`.
+  - If a version change is detected, the pipeline:
+    - Automatically tags the commit with the new version (e.g., `v1.0.0`).
+    - Generates an immutable Docker image with the stable version tag, which is pushed to Amazon ECR (Elastic Container Registry).
+    - Publishes the application artifact to AWS CodeArtifact with the same stable version.
+
+- **Development Snapshots (Develop Branch)**:
+  - For `develop`, each commit generates a new Docker image tagged as `develop` or `latest`, but it inherits the **snapshot version** specified in `pom.xml` or `package.json` (e.g., `1.1.0-SNAPSHOT`).
+  - This new image replaces the previous snapshot in ECR, allowing the latest state of the application to be tested.
+  - The `-SNAPSHOT` suffix is mandatory in the version for `develop` to clearly indicate it is a development build and not stable.
 
 #### Library Repository
-   - **Main Branch (Stable)**:
-      - For stable versions in `main`, the library repository pipeline checks for version changes in `pom.xml` or `package.json`.
-      - When a new stable version is detected, the pipeline:
-         - Automatically tags the commit with the new version (e.g., `v1.0.0`).
-         - Pushes the updated library as an immutable artifact to CodeArtifact, making it available to microservices with a stable version identifier.
 
-   - **Feature Branches (Snapshot Builds)**:
-      - In feature branches, each commit pushes a snapshot version of the library to CodeArtifact, replacing the previous snapshot artifact.
-      - This ensures that teams working on feature branches always have the latest updates without accumulating multiple snapshot artifacts.
+- **Main Branch (Stable)**:
+  - For stable versions in `main`, the library repository pipeline checks for version changes in `pom.xml` or `package.json`.
+  - When a new stable version is detected, the pipeline:
+    - Automatically tags the commit with the new version (e.g., `v1.0.0`).
+    - Pushes the updated library as an immutable artifact to CodeArtifact, making it available to microservices with a stable version identifier.
+
+- **Feature Branches (Snapshot Builds)**:
+  - In feature branches, each commit pushes a snapshot version of the library to CodeArtifact, replacing the previous snapshot artifact.
+  - This ensures that teams working on feature branches always have the latest updates without accumulating multiple snapshot artifacts.
 
 ---
 
