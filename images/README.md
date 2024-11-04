@@ -11,6 +11,8 @@ Each microservice version is mapped to exactly one image. By providing different
 
 AWS ECR repositories can be configured to have all-immutable tags (latest included) or al mutable. To ease the configuration we'll use a single, mutable repo for each service, instead of diving production and developing environments in 2 repositories. semantic versioning and immutability will be managed at the devops level instead. (Note: docker hub for instance does not have this behavior, everything is mutable).
 
+**`TODO:`** Each image should be in a namespace like `fididoc`, refactor old images.
+
 ## How to push an image to the ecr registry manually
 
 Make sure that you have the latest version of the AWS CLI and Docker installed. For more information, see [Getting Started with Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html).
@@ -57,16 +59,30 @@ Replace `$REPOSITORY_NAME` with the name of the repository, e.g. `fididoc-import
 
 ### Copy-Past script
 
+`$APP_NAME` and `$APP_VERSION` must match the one present in the pom.xml.
+
 ```sh
 # Build the Docker image and assign multiple tags
 docker build --build-arg APP_NAME=$APP_NAME \
              --build-arg APP_VERSION=$APP_VERSION \
-             -t $REPOSITORY_NAME:1.0.0-SNAPSHOT \
+             -t $REPOSITORY_NAME:$VERSION \
              -t $REPOSITORY_NAME:latest \
-             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:1.0.0-SNAPSHOT \
+             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:$VERSION \
              -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:latest .
 
 # Push each tag to ECR
-docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:1.0.0-SNAPSHOT
+docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:$VERSION
 docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:latest
+
+
+docker build --build-arg APP_NAME=fididocimport-be \
+             --build-arg APP_VERSION=1.0.0-SNAPSHOT \
+             -t fididoc/fididoc-import-be:1.0.0-SNAPSHOT \
+             -t fididoc/fididoc-import-be:latest \
+             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:1.0.0-SNAPSHOT \
+             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:latest .
+
+# Push each tag to ECR
+docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:1.0.0-SNAPSHOT
+docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:latest
 ```
