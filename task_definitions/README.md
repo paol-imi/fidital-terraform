@@ -2,11 +2,12 @@
 
 ## Relations
 
-One microservices version is binded to exactly one image, and that image is binded to more task definition to provide different configurations based on 
- - Customer (acarpia, fidital...)
- - Environment (uat, prod...)
+One microservices version is binded to exactly one image, and that image is binded to more task definition to provide different configurations based on
 
-```
+- Customer (acarpia, fidital...)
+- Environment (uat, prod...)
+
+```txt
 Microservice <--1to1--> Image <--1toN--> task definitions
 ```
 
@@ -14,7 +15,7 @@ Microservice <--1to1--> Image <--1toN--> task definitions
 
 ### Naming conventions
 
-```
+```txt
 ENVIRONMENT-CUSTOMER-MICROSERVICE_NAME
 ```
 
@@ -23,12 +24,13 @@ ENVIRONMENT-CUSTOMER-MICROSERVICE_NAME
 **`TODO:`** refactor old definitions
 
 ## Configuration
- 
+
 Task definitions combine a microservices image on ecr with:
- - env variables
- - ports binding
- - resources expected usage (memory, cpu...)
- - aws related settings
+
+- env variables
+- ports binding
+- resources expected usage (memory, cpu...)
+- aws related settings
 
 ### Version
 
@@ -51,4 +53,3 @@ In local environments, web servers must bind their port to a non-default one to 
 #### Cloudwatch logs
 
 **`TODO:`**: Logs should be grouped by Environment (e.g. distinguish prod by uat) other than by Customer. Refactor old tasks.
-

@@ -1,9 +1,9 @@
 {
-    "family": "uat-acarpia-fidicoc_import_fe",
+    "family": "uat-acarpia-fididoc_import_fe",
     "containerDefinitions": [
         {
             "name": "uat-fididoc_import_fe",
-            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc_import_fe:latest",
+            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc_import_fe:latest",
             "cpu": 0,
             "memory": 256,
             "portMappings": [
