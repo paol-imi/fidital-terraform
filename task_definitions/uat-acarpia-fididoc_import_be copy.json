@@ -1,14 +1,14 @@
 {
-    "family": "uat-acarpia-fididoc-import-be",
+    "family": "uat-acarpia-fididoc_import_be",
     "containerDefinitions": [
         {
-            "name": "uat-fididocbe",
-            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/uat-fididoc-import-be:latest",
+            "name": "uat-fididoc_import_be",
+            "image": "305653446094.dkr.ecr.eu-south-1.amazonaws.com/uat-fididoc_import_be:latest",
             "cpu": 0,
             "memory": 1024,
             "portMappings": [
                 {
-                    "name": "fididoc-be-8080",
+                    "name": "fididoc-import-be-8080",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -123,7 +123,7 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/terraform/uat/acarpia/fididoc-import-be",
+                    "awslogs-group": "/ecs/terraform/uat/acarpia/fididoc_import_be",
                     "awslogs-create-group": "true",
                     "awslogs-region": "eu-south-1",
                     "awslogs-stream-prefix": "ecs"
