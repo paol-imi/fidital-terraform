@@ -19,7 +19,7 @@
             "environment": [
                 {
                     "name": "SPRING_PROFILES_ACTIVE",
-                    "value": "uat"
+                    "value": "acarpia"
                 },
                 {
                     "name": "APPLICATION_PORT",
