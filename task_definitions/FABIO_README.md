@@ -1,0 +1,1 @@
+Ci sono hostname dns che non mi ritrovo, come `"https://ip-uat.fidital.digital"`. Puoi spiegarmi come li hai ottenuti? La parte `uat` la sostituisco con `prod` in produzione?
