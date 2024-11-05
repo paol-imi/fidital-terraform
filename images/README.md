@@ -19,7 +19,7 @@ Make sure that you have the latest version of the AWS CLI and Docker installed. 
 
 Use the following steps to authenticate and push an image to your repository. For additional registry authentication methods, including the Amazon ECR credential helper, see [Registry Authentication](https://docs.aws.amazon.com/AmazonECR/latest/userguide/Registries.html#registry_auth).
 
-Replace `$REPOSITORY_NAME` with the name of the repository, e.g. `fididoc-import-be`.
+Replace `$REPOSITORY_NAME` with the name of the repository, e.g. `fididoc_import_be`.
 
 0. **Make sure you have configured authentication in aws cli. A quick and dirty way is generating an access token from the iam panel.**
 
@@ -61,6 +61,8 @@ Replace `$REPOSITORY_NAME` with the name of the repository, e.g. `fididoc-import
 
 `$APP_NAME` and `$APP_VERSION` must match the one present in the pom.xml.
 
+**`TODO:`** I think something in the script is not correct as an empty image is being pushed on ecr.
+
 ```sh
 # Build the Docker image and assign multiple tags
 docker build --build-arg APP_NAME=$APP_NAME \
@@ -73,16 +75,19 @@ docker build --build-arg APP_NAME=$APP_NAME \
 # Push each tag to ECR
 docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:$VERSION
 docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/$REPOSITORY_NAME:latest
+```
 
+For instance, for the `fididoc_import_be` service:
 
+```sh
 docker build --build-arg APP_NAME=fididocimport-be \
              --build-arg APP_VERSION=1.0.0-SNAPSHOT \
-             -t fididoc/fididoc-import-be:1.0.0-SNAPSHOT \
-             -t fididoc/fididoc-import-be:latest \
-             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:1.0.0-SNAPSHOT \
-             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:latest .
+             -t fididoc/fididoc_import_be:1.0.0-SNAPSHOT \
+             -t fididoc/fididoc_import_be:latest \
+             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc_import_be:1.0.0-SNAPSHOT \
+             -t 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc_import_be:latest .
 
 # Push each tag to ECR
-docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:1.0.0-SNAPSHOT
-docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc-import-be:latest
+docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc_import_be:1.0.0-SNAPSHOT
+docker push 305653446094.dkr.ecr.eu-south-1.amazonaws.com/fididoc/fididoc_import_be:latest
 ```

@@ -27,7 +27,7 @@
                 },
                 {
                     "name": "MONGODB_URI",
-                    "value": "mongodb://fididoc-import:fididoc-import@localhost:27017/fidiDocImport?authSource=admin"
+                    "value": "mongodb://username:password@fididoc-mongodb.cluster-ckzt8ouyu4n4.eu-south-1.docdb.amazonaws.com:27017/fidiDocImport"
                 },
                 {
                     "name": "S3_URL",

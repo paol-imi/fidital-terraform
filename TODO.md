@@ -1,0 +1,4 @@
+- definisci o trova uno standard per nomenclatura risorse (e tag)
+- Rimuove dal build maven e da codeartifact tutto il superfluo (e.g. controller package) per non rallentare pipleine (e debug su pipleine)
+- Usa AWS cli v2 e IMA identity per accedere da cli.
+- quali servizi dividere per cliente? a che livello (db, boot app)
